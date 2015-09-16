@@ -296,9 +296,9 @@ SCLTimerDisplay *buttonTimer;
         y += _subTitleHeight + 14.0f;
         for (UITextField *textField in _inputs)
         {
-            textField.frame = CGRectMake(12.0f, y, _windowWidth - 24.0f, 30.0f);
+            textField.frame = CGRectMake(12.0f, y, _windowWidth - 24.0f, textField.frame.size.height);
             textField.layer.cornerRadius = 3.0f;
-            y += 40.0f;
+            y += textField.frame.size.height + 10.0f;
         }
         
         // Buttons
@@ -486,8 +486,15 @@ SCLTimerDisplay *buttonTimer;
 
 - (void)addCustomTextField:(UITextField *)textField
 {
+    [self addObservers];
+    
+    textField.returnKeyType = UIReturnKeyDone;
+    textField.borderStyle = UITextBorderStyleRoundedRect;
+    textField.layer.masksToBounds = YES;
+    textField.layer.borderWidth = 1.0f;
+    
     // Update view height
-    self.windowHeight += 40.0f;
+    self.windowHeight += textField.bounds.size.height + 10.0f;
     
     [_contentView addSubview:textField];
     [_inputs addObject:textField];
@@ -627,7 +634,7 @@ SCLTimerDisplay *buttonTimer;
     {
         [self hideView];
     }
-
+    
     if (btn.actionType == Block)
     {
         if (btn.actionBlock)
@@ -858,6 +865,10 @@ SCLTimerDisplay *buttonTimer;
     
     // Alert view color and images
     self.circleView.backgroundColor = viewColor;
+    
+    if(self.circleBackgroundColor) {
+        self.circleView.backgroundColor = self.circleBackgroundColor;
+    }
     
     if (style == Waiting)
     {
@@ -1208,7 +1219,7 @@ SCLTimerDisplay *buttonTimer;
         [self.backgroundView removeFromSuperview];
         if(_usingNewWindow)
         {
-            // Remove current window            
+            // Remove current window
             [self.SCLAlertWindow setHidden:YES];
             self.SCLAlertWindow = nil;
         }

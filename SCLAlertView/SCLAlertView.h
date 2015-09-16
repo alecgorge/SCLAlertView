@@ -166,6 +166,12 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 @property (nonatomic, strong) UIColor *iconTintColor;
 
+/** Set a custom background color for the circle
+ *
+ * SCLAlertView circle background color
+ */
+@property (nonatomic, strong) UIColor *circleBackgroundColor;
+
 /** Set custom circle icon height.
  *
  * Circle icon height
